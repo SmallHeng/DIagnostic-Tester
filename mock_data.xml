@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Simulator
+    vin="LVDTESTSIM000001"
+    logical_address="0x0E00"
+    eid="00 11 22 33 44 55"
+    gid="AA BB CC DD EE FF">
+  <DoIP allowed_testers="0x0E80" diagnostic_ack="true" />
+  <Ecus>
+    <Ecu name="Gateway" address="0x1001" role="gateway" access="direct" s3_timeout="5.0">
+      <Dtcs>
+        <Dtc code="0x123456" status="0x09" severity="0x20" functional_unit="0x10" fault_detection_counter="0x7F" snapshot="01 02 F1 90 12 34" extended_data="01 AA BB CC" permanent="true" clear_status="0x08" clear_fault_detection_counter="0x01" />
+        <Dtc code="0x223344" status="0x2F" severity="0x40" functional_unit="0x20" fault_detection_counter="0x22" snapshot="01 02 10 01 55 66" extended_data="01 10 20 30" memory="mirror" clearable="false" />
+        <Dtc code="0x334455" status="0x04" severity="0x10" functional_unit="0x30" fault_detection_counter="0x05" memory="obd" />
+      </Dtcs>
+      <Security>
+        <Level name="level1" request_seed="0x01" send_key="0x02" seed="12 34 56 78" key="87 65 43 21" max_attempts="3" lock_time="10.0" />
+      </Security>
+      <Download start_address="0x00010000" end_address="0x0001FFFF" max_block_length="0x10" required_session="0x03" required_security="level1" />
+      <Service id="0x11" handler="ecu_reset" reset_behavior="disconnect" reset_delay="10.0" supported_reset_types="0x01,0x02,0x03" restore_dtcs_on_reset="true" />
+      <Service id="0x14" handler="clear_dtc" required_session="0x03" required_security="level1" />
+      <Service id="0x19" handler="dtc" />
+      <Service id="0x27" handler="security_access" />
+      <Service id="0x22">
+        <Data did="0xF190">
+          <Response>62 F1 90 4C 56 44 54 45 53 54 53 49 4D 30 30 30 30 30 31</Response>
+        </Data>
+        <Data did="0xF187" response_mode="sequential">
+          <Response>62 F1 87 00 00 00 01</Response>
+          <Response>62 F1 87 00 00 00 02</Response>
+          <Response>62 F1 87 00 00 00 03</Response>
+        </Data>
+       <Data did="0xF188" response_mode="sequential">
+          <Response>62 F1 88 A0 70 00 01</Response>
+          <Response>62 F1 88 00 CC 00 02</Response>
+          <Response>62 F1 88 00 B4 40 03</Response>
+        </Data>
+        <Data did="0xF18C" simulate_pending="true" total_delay="2.5" pending_interval="0.8">
+          <Response>62 F1 8C 53 49 4D 2D 53 4C 4F 57</Response>
+        </Data>
+      </Service>
+      <Service id="0x2E" required_session="0x03" required_security="level1">
+        <Data request="2E F1 91 12 34">
+          <Response>6E F1 91</Response>
+        </Data>
+      </Service>
+      <Service id="0x31" required_session="0x03" required_security="level1">
+        <Data request="31 01 FF 00" simulate_pending="true" total_delay="3.0" pending_interval="0.05">
+          <Response>71 01 FF 00 00</Response>
+        </Data>
+        <Data request="31 01 FF 01" simulate_pending="true" total_delay="1.0" pending_interval="0.05">
+          <Response>71 01 FF 01 00</Response>
+        </Data>
+      </Service>
+      <Service id="0x34" handler="download" />
+      <Service id="0x36" handler="dynamic_echo" required_session="0x03" required_security="level1" />
+      <Service id="0x37" handler="transfer_exit" />
+      <Service id="0x29" handler="mock_auth" />
+    </Ecu>
+    <Ecu name="BodyControlModule" address="0x1002" role="ecu" access="proxied" gateway="0x1001" s3_timeout="5.0">
+      <Service id="0x22">
+        <Data did="0xF190">
+          <Response>62 F1 90 42 43 4D 53 49 4D 30 30 30 30 30 30 30 30 32</Response>
+        </Data>
+      </Service>
+    </Ecu>
+  </Ecus>
+</Simulator>

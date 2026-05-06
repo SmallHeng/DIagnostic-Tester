@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Build outputs
+build/
+dist/
+*.spec.tmp
+
+# PyInstaller outputs inside subprojects
+ODX_Editor/build/
+ODX_Editor/dist/
+
+# Portable packages and generated bundles
+portable/
+
+# Runtime logs and generated debug files
+logs/
+*.log
+tester_gui_debug.log
+ODX_Editor/logs/
+
+# Local binary flash files
+Flash File/
+
+# Local editor/system files
+.idea/
+.vscode/
+*.swp
+*.tmp
+Thumbs.db
+Desktop.ini
+
+# Keep test ODX/PDX fixtures under tests/.tmp tracked intentionally.
+!tests/.tmp/
+!tests/.tmp/*.odx
+!tests/.tmp/*.xml
+!tests/.tmp/*.pdx

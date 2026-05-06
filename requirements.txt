@@ -1,0 +1,6 @@
+# Runtime is standard-library only.
+# Optional for a smoother async REPL:
+aioconsole>=0.7.0
+
+# Optional packaging:
+pyinstaller>=6.0
